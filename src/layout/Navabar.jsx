@@ -3,7 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
-// import LogoutButton from "../../../../../Downloads/LogoutButton";
+import LoginBottom from "../components/LoginBottom";
+// import Sign from "../components/Sign";
 
 const links = [
   { path: "/", name: "Home" },
@@ -34,6 +35,8 @@ const Navabar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false); // desktop dropdown
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false); // mobile submenu
   const dropdownRef = useRef(null);
+  const [login, setLogin] = useState(false);
+  const [sign, setSign] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -108,10 +111,15 @@ const Navabar = () => {
         </ul>
 
         <div className="flex flex-row justify-between items-center gap-4">
-          <p className="block mr-5 px-2.5 hover:scale-110 rounded-2xl py-1 bg-gray-950 text-gray-100 md:hidden ">
+          <button
+            onClick={() => {
+              setLogin(true);
+            }}
+            className="mr-5 px-2.5 hover:scale-110 rounded-2xl  py-1 bg-gray-950 text-gray-100 md:block ">
             Login
-          </p>
-          {/* <LogoutButton className="block mr-5 px-2.5 hover:scale-110 rounded-2xl py-1 bg-gray-950 text-gray-100 md:hidden " /> */}
+          </button>
+          {login && <LoginBottom onClose={() => setLogin(false)} />}
+
           {open ? (
             <IoMdClose
               onClick={() => setOpen(false)}
@@ -123,13 +131,10 @@ const Navabar = () => {
               className="cursor-pointer text-3xl font-bold md:hidden"
             />
           )}
-          <p className="hidden mr-5 px-2.5 hover:scale-110 rounded-2xl  py-1 bg-gray-950 text-gray-100 md:block ">
-            Login
-          </p>
-          {/* <LogoutButton className="hidden mr-5 px-2.5 hover:scale-110 rounded-2xl py-1 bg-gray-950 text-gray-100 md:block " /> */}
         </div>
 
         {/* mobile */}
+
         {open && (
           <ul className="md:hidden flex flex-col gap-4 absolute top-10 right-0 border rounded-xl mt-3 pt-1 px-2 bg-white w-full max-w-3/3 h-screen max-h-96 overflow-y-auto">
             {links.map((link) =>
@@ -144,6 +149,24 @@ const Navabar = () => {
                         mobileDropdownOpen ? "rotate-180" : ""
                       }`}
                     />
+
+                    {/* <button
+                      onClick={() => {
+                        setLogin(true);
+                      }}
+                      className="hidden mr-5 px-2.5 hover:scale-110 rounded-2xl  py-1 bg-gray-950 text-gray-100 md:block ">
+                      Login
+                    </button>
+                    {login && <LoginBottom onClose={() => setLogin(false)} />}
+
+                    <button
+                      onClick={() => {
+                        setSign(true);
+                      }}
+                      className="hidden mr-5 px-2.5 hover:scale-110 rounded-2xl  py-1 bg-gray-950 text-gray-100 md:block ">
+                      Sign Up
+                    </button>
+                    {login && <Sign onClose={() => setSign(false)} />} */}
                   </button>
 
                   {mobileDropdownOpen && (
@@ -168,6 +191,7 @@ const Navabar = () => {
                       ))}
                     </ul>
                   )}
+
                   <hr className="text-gray-300 mt-2" />
                 </li>
               ) : (
